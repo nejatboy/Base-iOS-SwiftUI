@@ -8,20 +8,20 @@
 import SwiftUI
 
 
-struct HomeView: View {
+struct PostsView: View {
 
-    @StateObject private var viewModel: HomeViewModel
+    @StateObject private var viewModel: PostsViewModel
 
 
-    init(viewModel: HomeViewModel) {
+    init(viewModel: PostsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
 
     var body: some View {
         content
-            .navigationTitle("Ana Sayfa")
-            .task { await viewModel.loadItems() }
+            .navigationTitle("Gönderiler")
+            .task { await viewModel.loadPosts() }
     }
 
 
@@ -38,9 +38,18 @@ struct HomeView: View {
                 .foregroundColor(.secondary)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-        case let .loaded(items):
-            List(items) { item in
-                Text(item.name)
+        case let .loaded(posts):
+            List(posts) { post in
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(post.title)
+                        .font(.headline)
+
+                    Text(post.body)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .lineLimit(2)
+                }
+                .padding(.vertical, 4)
             }
 
         case let .failed(error):
@@ -59,8 +68,6 @@ struct HomeView: View {
 
 
     private func reload() {
-        Task {
-            await viewModel.loadItems()
-        }
+        Task { await viewModel.loadPosts() }
     }
 }

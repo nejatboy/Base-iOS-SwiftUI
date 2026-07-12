@@ -12,10 +12,14 @@ struct RootView: View {
 
     var body: some View {
         NavigationView {
-            HomeView(
-                viewModel: HomeViewModel(repository: PreviewItemRepository())
-            )
+            PostsView(viewModel: PostsViewModel(repository: makeRepository()))
         }
         .navigationViewStyle(.stack)
+    }
+
+
+    private func makeRepository() -> PostRepository {
+        let apiClient = URLSessionAPIClient(baseURL: URL(string: "https://jsonplaceholder.typicode.com")!)
+        return RemotePostRepository(apiClient: apiClient)
     }
 }

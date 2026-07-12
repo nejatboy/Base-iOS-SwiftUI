@@ -8,7 +8,9 @@
 import Foundation
 
 
-struct Item: Identifiable, Decodable, Equatable {
+struct Post: Identifiable, Decodable, Equatable {
+    let userId: Int
     let id: Int
-    let name: String
+    let title: String
+    let body: String
 }

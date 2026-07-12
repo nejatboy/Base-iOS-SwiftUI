@@ -28,13 +28,3 @@ final class RemotePostRepository: PostRepository {
         return try await apiClient.request(endpoint, as: [Post].self)
     }
 }
-
-
-final class PreviewPostRepository: PostRepository {
-    func fetchPosts() async throws -> [Post] {
-        [
-            Post(userId: 1, id: 1, title: "Birinci başlık", body: "Birinci içerik"),
-            Post(userId: 1, id: 2, title: "İkinci başlık", body: "İkinci içerik"),
-        ]
-    }
-}

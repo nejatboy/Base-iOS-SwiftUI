@@ -10,16 +10,11 @@ import SwiftUI
 
 struct RootView: View {
 
+    let container: AppContainer
+
     var body: some View {
-        NavigationView {
-            PostsView(viewModel: PostsViewModel(repository: makeRepository()))
+        NavigationStack {
+            container.makePostsView()
         }
-        .navigationViewStyle(.stack)
-    }
-
-
-    private func makeRepository() -> PostRepository {
-        let apiClient = URLSessionAPIClient(baseURL: URL(string: "https://jsonplaceholder.typicode.com")!)
-        return RemotePostRepository(apiClient: apiClient)
     }
 }
